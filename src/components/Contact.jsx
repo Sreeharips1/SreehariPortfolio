@@ -9,7 +9,7 @@ import { FaInstagram, FaTwitter, FaWhatsapp } from "react-icons/fa";
 
 // 🚗 CAR
 const Car = ({ triggerMove, submitMove, pointerX }) => {
-  const { scene } = useGLTF("/models/car.glb");
+  const { scene } = useGLTF("/models/carv1.glb");
 
   const group = useRef();
   const baseX = -2.5;

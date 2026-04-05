@@ -8,7 +8,7 @@ import MapCard from "./MapCard";
 
 /* ================= MODEL ================= */
 function HouseModel({ section, mouse }) {
-  const { scene } = useGLTF("./models/car.glb");
+  const { scene } = useGLTF("./models/carv1.glb");
   const ref = useRef();
 
   useFrame(() => {
