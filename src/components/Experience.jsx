@@ -19,7 +19,7 @@ const ExperienceCard = ({ experience }) => {
         background: "#350505",
         color: "#d9d6d6",
       }}
-      contentArrowStyle={{ borderRight: "7px solid  #232631" }}
+      contentArrowStyle={{ borderRight: "7px solid #232631" }}
       date={experience.date}
       iconStyle={{ background: experience.iconBg }}
       icon={
@@ -27,27 +27,22 @@ const ExperienceCard = ({ experience }) => {
           <img
             src={experience.icon}
             alt={experience.company_name}
-            className="w-[100%] h-[100%] object-contain"
+            loading="lazy" // 🔥 IMPORTANT
+            className="w-full h-full object-contain"
           />
         </div>
       }
     >
       <div>
-        <h3 className="text-white text-[24px] font-bold">{experience.title}</h3>
-        <p
-          className="text-secondary text-[16px] font-semibold"
-          style={{ margin: 0 }}
-        >
+        <h3 className="text-white text-[22px] font-bold">{experience.title}</h3>
+        <p className="text-secondary text-[15px] font-semibold">
           {experience.company_name}
         </p>
       </div>
 
-      <ul className="mt-5 list-disc ml-5 space-y-2">
+      <ul className="mt-4 list-disc ml-5 space-y-2">
         {experience.points.map((point, index) => (
-          <li
-            key={`experience-point-${index}`}
-            className="text-white-100 text-[14px] pl-1 tracking-wider"
-          >
+          <li key={index} className="text-gray-300 text-[14px] tracking-wide">
             {point}
           </li>
         ))}
@@ -59,25 +54,29 @@ const ExperienceCard = ({ experience }) => {
 const Experience = () => {
   return (
     <>
-      <motion.div variants={textVariant()}>
-        <p className="text-red-400 text-[14px] sm:text-[18px] uppercase tracking-wider text-center ">
+      {/* 🔥 FIXED MOTION */}
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        variants={textVariant()}
+      >
+        <p className="text-red-400 text-[14px] sm:text-[18px] uppercase tracking-wider text-center">
           What I have done so far
         </p>
+
         <h2
           id="work"
-          className={`${styles.sectionHeadText} text-center text-red-500 italic font-[cursive] `}
+          className={`${styles.sectionHeadText} text-center text-red-500 italic font-[cursive]`}
         >
           Work Experience.
         </h2>
       </motion.div>
 
-      <div className="mt-20 flex justify-center ">
+      <div className="mt-20 flex justify-center">
         <VerticalTimeline className="!before:bg-red-500 w-full max-w-4xl mx-auto">
           {experiences.map((experience, index) => (
-            <ExperienceCard
-              key={`experience-${index}`}
-              experience={experience}
-            />
+            <ExperienceCard key={index} experience={experience} />
           ))}
         </VerticalTimeline>
       </div>

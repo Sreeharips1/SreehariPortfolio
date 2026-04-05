@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
 
 import {
   About,
   Contact,
-  Experience,
   Hero,
   Tech,
   Navbar,
@@ -15,12 +15,21 @@ import {
 import Footer from "./components/Footer";
 import PreLoader from "./components/PreLoader";
 
+// 🔥 Lazy load Experience
+const Experience = lazy(() => import("./components/Experience"));
+
 const App = () => {
   const [loading, setLoading] = useState(true);
 
+  // 👇 scroll detection
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
   useEffect(() => {
     const handleLoad = () => {
-      setTimeout(() => setLoading(false), 1200); // ⏱️ smooth timing
+      setTimeout(() => setLoading(false), 1200);
     };
 
     if (document.readyState === "complete") {
@@ -47,7 +56,22 @@ const App = () => {
         </div>
 
         <About />
-        <Experience />
+
+        {/* 🔥 Lazy + Scroll load */}
+        <div ref={ref}>
+          {inView && (
+            <Suspense
+              fallback={
+                <div className="text-white text-center py-10">
+                  Loading Experience...
+                </div>
+              }
+            >
+              <Experience />
+            </Suspense>
+          )}
+        </div>
+
         <Tech />
         <Projects />
 
